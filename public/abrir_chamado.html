@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abrir Chamado de Suporte</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <button id="theme-toggle" class="theme-toggle-button">🌙</button> 
+
+    <div class="container">
+        <h1>Abrir Novo Chamado</h1>
+
+        <form id="formAbrirChamado">
+            <label for="requerente">Requerente:</label>
+            <input type="text" id="requerente" name="requerente" placeholder="Seu nome completo" required>
+
+            <label for="urgencia">Nível de Urgência:</label>
+            <select id="urgencia" name="urgencia" required>
+                <option value="">Selecione o Nível de Urgência</option>
+                <option value="1">1 - Crítico (Parou tudo!)</option>
+                <option value="2">2 - Alta (Impacta trabalho, mas com contorno)</option>
+                <option value="3">3 - Média (Atrapalha, mas é possível continuar)</option>
+                <option value="4">4 - Baixa (Pode esperar, mas precisa de atenção)</option>
+                <option value="5">5 - Planejamento (Melhorias, dúvidas futuras)</option>
+            </select>
+
+            <label for="departamento">Departamento:</label>
+            <select id="departamento" name="departamento" required>
+                <option value="">Selecione o Departamento</option>
+                <option value="Administrativo">Administrativo</option>
+                <option value="Financeiro">Financeiro</option>
+                <option value="RH">Recursos Humanos</option>
+                <option value="Producao">Produção</option>
+                <option value="Vendas">Vendas</option>
+                <option value="Marketing">Marketing</option>
+                <option value="TI">TI</option>
+                <option value="Outro">Outro</option>
+            </select>
+
+            <label for="dispositivo">Dispositivo:</label>
+            <select id="dispositivo" name="dispositivo" required>
+                <option value="">Selecione o Dispositivo</option>
+                <option value="Computador">Computador (Desktop/Notebook)</option>
+                <option value="Impressora">Impressora</option>
+                <option value="Celular Corporativo">Celular Corporativo</option>
+                <option value="Rede/Internet">Rede/Internet</option>
+                <option value="Software Especifico">Software Específico</option>
+                <option value="Sistema Interno">Sistema Interno</option>
+                <option value="Periferico">Periférico (Mouse/Teclado/Monitor)</option>
+                <option value="Outro">Outro</option>
+            </select>
+
+            <label for="erroApresentado">Erro Apresentado:</label>
+            <select id="erroApresentado" name="erroApresentado" required>
+                <option value="">Selecione o Erro Apresentado</option>
+                <option value="Internet">Internet Lenta/Sem Conexão</option>
+                <option value="Impressao">Não Consigo Imprimir</option>
+                <option value="Sistema Travando">Sistema Travando/Lento</option>
+                <option value="Problema Email">Problema com E-mail</option>
+                <option value="Arquivo Sumiu">Arquivo/Pasta Sumiu</option>
+                <option value="Erro Login">Erro de Login/Senha</option>
+                <option value="Outro">Outro (descreva abaixo)</option>
+            </select>
+
+            <div id="outroErroContainer" class="hidden">
+                <label for="outroErro">Descreva o erro (Outro):</label>
+                <input type="text" id="outroErro" name="outroErro" placeholder="Ex: Software XPTO não abre">
+            </div>
+
+            <label for="comentario">Comentário (opcional):</label>
+            <textarea id="comentario" name="comentario" rows="5" placeholder="Descreva o problema em detalhes..."></textarea>
+
+            <div class="form-buttons">
+                <button type="submit" class="button button-submit">Enviar Chamado</button>
+                <a href="index.html" class="button button-back">Voltar</a>
+            </div>
+        </form>
+    </div>
+
+    <script src="js/theme.js"></script>
+    <script src="js/abrir_chamado.js"></script>
+</body>
+</html>
