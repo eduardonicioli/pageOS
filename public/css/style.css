@@ -1,0 +1,269 @@
+/* public/css/style.css */
+
+/* --- Estilos Gerais e Reset --- */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #F8F8F8; /* Fundo muito suave, cinza quase branco - TEMA CLARO */
+    color: #333;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transição suave para o tema */
+}
+
+/* --- Estilos para o TEMA ESCURO --- */
+body.dark-mode {
+    background-color: #2c2c2c; /* Fundo escuro */
+    color: #f0f0f0; /* Texto claro */
+}
+
+body.dark-mode .container {
+    background-color: #3a3a3a; /* Fundo do container mais escuro */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode h1,
+body.dark-mode label {
+    color: #f0f0f0; /* Títulos e labels claros no modo escuro */
+}
+
+body.dark-mode input[type="text"],
+body.dark-mode textarea,
+body.dark-mode select {
+    background-color: #4a4a4a; /* Fundo dos inputs mais escuro */
+    border-color: #555;
+    color: #f0f0f0;
+}
+
+body.dark-mode input[type="text"]:focus,
+body.dark-mode textarea:focus,
+body.dark-mode select:focus {
+    border-color: #4CAF50; /* Borda verde no foco (mantém a cor de destaque) */
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.4); /* Sombra verde no foco */
+}
+
+/* --- Estilos do Botão de Alternância de Tema --- */
+.theme-toggle-button {
+    position: fixed; /* Fixa o botão na tela */
+    top: 20px;
+    right: 20px;
+    background-color: #6c757d; /* Cinza para o botão de tema */
+    color: #fff;
+    border: none;
+    border-radius: 50%; /* Botão redondo */
+    width: 45px;
+    height: 45px;
+    font-size: 1.2em;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    z-index: 1000; /* Garante que o botão fique acima de outros elementos */
+}
+
+.theme-toggle-button:hover {
+    background-color: #5a6268;
+    transform: scale(1.05);
+}
+
+/* Estilo do botão de tema no modo escuro */
+body.dark-mode .theme-toggle-button {
+    background-color: #5a6268; /* Um tom ligeiramente diferente para o botão no dark mode */
+}
+
+body.dark-mode .theme-toggle-button:hover {
+    background-color: #6c757d;
+}
+
+/* --- Estilos do Container e Títulos --- */
+.container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Centraliza o conteúdo principal como h1 e button-group */
+    max-width: 500px;
+    width: 100%;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+h1 {
+    font-size: 2.2em;
+    color: #333;
+    margin-bottom: 40px;
+    text-align: center;
+    transition: color 0.3s ease;
+}
+
+/* --- Estilos dos Botões Principais (Home Screen e Compartilhados) --- */
+.button {
+    /* Propriedades comuns a todos os botões que usam a classe 'button' */
+    display: flex; /* Transforma em flex container */
+    justify-content: center; /* CENTRALIZA O CONTEÚDO HORIZONTALMENTE (o texto "Voltar") */
+    align-items: center; /* CENTRALIZA O CONTEÚDO VERTICALMENTE */
+    color: #fff;
+    padding: 18px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1.3em;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none;
+    cursor: pointer;
+    width: 100%; /* Ocupa a largura total disponível pelo pai */
+}
+
+/* Estilos específicos para os botões da tela inicial */
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 90%;
+    margin-top: 20px;
+}
+
+.button:not(.button-back):not(.button-submit) { /* Estilo para os botões azuis na Home */
+    background-color: #4CAF50; /* Verde principal para os botões da home */
+}
+.button:not(.button-back):not(.button-submit):hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+
+/* --- Estilos do Formulário (abrir_chamado.html) --- */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espaço entre os campos do formulário */
+    margin-top: 20px;
+    /* Remover text-align: left daqui, os labels são alinhados individualmente */
+}
+
+label {
+    font-size: 1em;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 5px;
+    display: block;
+    text-align: left; /* Adiciona o text-align: left APENAS nos labels */
+    transition: color 0.3s ease;
+}
+
+input[type="text"],
+textarea,
+select {
+    width: calc(100% - 24px); /* Ajusta a largura considerando o padding e a borda */
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    color: #333;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
+    border-color: #4CAF50;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.25);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Container para os botões dentro do formulário para centralizá-los */
+.form-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* CENTRALIZA OS ITENS NA HORIZONTAL */
+    gap: 10px; /* Espaço entre os botões */
+    margin-top: 20px;
+}
+
+.button-submit {
+    background-color: #4CAF50; /* Verde principal para o botão de envio */
+    max-width: 300px; /* Limita a largura dos botões para que não fiquem gigantes */
+}
+
+.button-submit:hover {
+    background-color: #45a049;
+}
+
+/* Estilo para o botão Voltar */
+.button-back {
+    background-color: #6c757d; /* Cinza para o botão Voltar */
+    max-width: 260px; /* Limita a largura dos botões */
+}
+
+.button-back:hover {
+    background-color: #5a6268;
+}
+
+/* Estilo do botão Voltar no modo escuro */
+body.dark-mode .button-back {
+    background-color: #5a6268;
+}
+
+body.dark-mode .button-back:hover {
+    background-color: #6c757d;
+}
+
+/* --- Media Queries para Responsividade --- */
+@media (max-width: 600px) {
+    body {
+        padding: 15px;
+    }
+
+    .container {
+        padding: 25px 15px;
+        border-radius: 8px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+        margin-bottom: 30px;
+    }
+
+    .button {
+        font-size: 1.1em;
+        padding: 15px 20px;
+    }
+
+    input[type="text"],
+    textarea,
+    select {
+        font-size: 0.95em;
+        padding: 10px;
+    }
+
+    label {
+        font-size: 0.9em;
+    }
+
+    .button-group {
+        gap: 15px;
+    }
+
+    .form-buttons {
+        gap: 8px; /* Reduz espaço entre botões em mobile */
+    }
+}
