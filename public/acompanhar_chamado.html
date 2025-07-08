@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acompanhar Chamado</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <button id="theme-toggle" class="theme-toggle-button">🌙</button> 
+
+    <div class="container">
+        <h1>Acompanhar Chamado</h1>
+
+        <div class="search-section">
+            <label for="chamadoIdInput">Digite o ID do Chamado:</label>
+            <input type="text" id="chamadoIdInput" placeholder="Ex: OS-2025-1234" required>
+            <button id="buscarChamadoBtn" class="button button-submit">Buscar Chamado</button>
+        </div>
+
+        <div id="resultadoChamado" class="chamado-details hidden">
+            <h2>Detalhes do Chamado <span id="chamadoIdDisplay"></span></h2>
+            <p><strong>Status:</strong> <span id="chamadoStatus"></span></p>
+            <p><strong>Requerente:</strong> <span id="chamadoRequerente"></span></p>
+            <p><strong>Departamento:</strong> <span id="chamadoDepartamento"></span></p>
+            <p><strong>Dispositivo:</strong> <span id="chamadoDispositivo"></span></p>
+            <p><strong>Erro Apresentado:</strong> <span id="chamadoErro"></span></p>
+            <p><strong>Nível de Urgência:</strong> <span id="chamadoUrgencia"></span></p>
+            <p><strong>Comentário:</strong> <span id="chamadoComentario"></span></p>
+            <p><strong>Data de Abertura:</strong> <span id="chamadoDataAbertura"></span></p>
+        </div>
+
+        <div id="mensagemErroChamado" class="error-message hidden">
+            </div>
+
+        <div class="form-buttons">
+            <a href="index.html" class="button button-back">Voltar</a>
+        </div>
+    </div>
+
+    <script src="js/theme.js"></script>
+    <script src="js/acompanhar_chamado.js"></script>
+</body>
+</html>
