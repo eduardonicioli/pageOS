@@ -7,11 +7,15 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <button id="theme-toggle" class="theme-toggle-button">🌙</button> 
+ 
+    <!-- Botão para alternar tema -->
+    <button id="theme-toggle" class="theme-toggle-button">🌙</button>
 
+    <!-- Container principal -->
     <div class="container">
         <h1>Abrir Novo Chamado</h1>
 
+        <!-- Formulário para abrir chamado -->
         <form id="formAbrirChamado">
             <label for="requerente">Requerente:</label>
             <input type="text" id="requerente" name="requerente" placeholder="Seu nome completo" required>
@@ -20,7 +24,7 @@
             <select id="urgencia" name="urgencia" required>
                 <option value="">Selecione o Nível de Urgência</option>
                 <option value="1">1 - Crítico (Parou tudo!)</option>
-                <option value="2">2 - Alta (Impacta trabalho, mas com contorno)</option>
+                <option value="2">2 - Alta (Impacta o trabalho, mas contorno)</option>
                 <option value="3">3 - Média (Atrapalha, mas é possível continuar)</option>
                 <option value="4">4 - Baixa (Pode esperar, mas precisa de atenção)</option>
                 <option value="5">5 - Planejamento (Melhorias, dúvidas futuras)</option>
@@ -30,11 +34,17 @@
             <select id="departamento" name="departamento" required>
                 <option value="">Selecione o Departamento</option>
                 <option value="Administrativo">Administrativo</option>
+                <option value="Comercial">Comercial</option>
+                <option value="Ecommerce">Ecommerce</option>
+                <option value="Estilo">Estilo</option>
+                <option value="Estoque">Estoque</option>
+                <option value="Expedição">Expedição</option>
+                <option value="Faturamento">Faturamento</option>
                 <option value="Financeiro">Financeiro</option>
-                <option value="RH">Recursos Humanos</option>
                 <option value="Producao">Produção</option>
-                <option value="Vendas">Vendas</option>
                 <option value="Marketing">Marketing</option>
+                <option value="Recepção">Recepção</option>
+                <option value="RH">Recursos Humanos</option>
                 <option value="TI">TI</option>
                 <option value="Outro">Outro</option>
             </select>
@@ -47,7 +57,7 @@
                 <option value="Celular Corporativo">Celular Corporativo</option>
                 <option value="Rede/Internet">Rede/Internet</option>
                 <option value="Software Especifico">Software Específico</option>
-                <option value="Sistema Interno">Sistema Interno</option>
+                <option value="Sistema Interno">Sistema Millenium</option>
                 <option value="Periferico">Periférico (Mouse/Teclado/Monitor)</option>
                 <option value="Outro">Outro</option>
             </select>
@@ -64,21 +74,25 @@
                 <option value="Outro">Outro (descreva abaixo)</option>
             </select>
 
+            <!-- Campo condicional para descrição de "Outro" erro -->
             <div id="outroErroContainer" class="hidden">
                 <label for="outroErro">Descreva o erro (Outro):</label>
-                <input type="text" id="outroErro" name="outroErro" placeholder="Ex: Software XPTO não abre">
+                <input type="text" id="outroErro" name="outroErro" placeholder="Ex: Não consigo editar a planilha">
             </div>
 
             <label for="comentario">Comentário (opcional):</label>
-            <textarea id="comentario" name="comentario" rows="5" placeholder="Descreva o problema em detalhes..."></textarea>
+            <textarea id="comentario" name="comentario" rows="5" placeholder="Descreva os detalhes..."></textarea>
 
+            <!-- Botões de ação -->
             <div class="form-buttons">
                 <button type="submit" class="button button-submit">Enviar Chamado</button>
                 <a href="index.html" class="button button-back">Voltar</a>
             </div>
         </form>
     </div>
+  
 
+    <!-- Scripts -->
     <script src="js/theme.js"></script>
     <script src="js/abrir_chamado.js"></script>
 </body>
