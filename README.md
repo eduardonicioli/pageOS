@@ -36,13 +36,21 @@ A ideia é oferecer uma solução simples e funcional para registrar solicitaç�
 
 Abaixo, algumas telas do sistema em funcionamento:
 
-### 📋 Formulário de novo chamado
-![Formulário de novo chamado](./imagens/screen4.png)
-
-### 📄 Detalhes do chamados
-![Detalhes do chamados](./imagens/screen8.png)
-
-> 📸 *As imagens estão na pasta `screenshots/` do repositório. Você pode alterar ou adicionar conforme necessário.*
+Página inicial:
+<p align="center">
+  <img src="./imagens/screen1.png" alt="Formulário" width="300"/>
+  <img src="./imagens/screen2.png" alt="Lista de Chamados" width="300"/>
+</p>
+Página abertura de chamado:
+<p align="center">
+  <img src="./imagens/screen3.png" alt="Formulário" width="300"/>
+  <img src="./imagens/screen9.png" alt="Lista de Chamados" width="300"/>
+</p>
+Página acompanhar de chamado:
+<p align="center">
+  <img src="./imagens/screen5.png" alt="Formulário" width="300"/>
+  <img src="./imagens/screen7.png" alt="Lista de Chamados" width="300"/>
+</p>
 
 ---
 
@@ -50,4 +58,4 @@ Abaixo, algumas telas do sistema em funcionamento:
 
 1. 🔽 Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio.git
+   git clone https://github.com/eduardonicioli/pageOS.git
