@@ -37,10 +37,10 @@ A ideia é oferecer uma solução simples e funcional para registrar solicitaç�
 Abaixo, algumas telas do sistema em funcionamento:
 
 ### 📋 Formulário de novo chamado
-![Formulário de novo chamado](./imagens/screen1.png)
+![Formulário de novo chamado](./imagens/screen4.png)
 
-### 📄 Lista de chamados
-![Lista de chamados](./imagens/screen1.png)
+### 📄 Detalhes do chamados
+![Detalhes do chamados](./imagens/screen8.png)
 
 > 📸 *As imagens estão na pasta `screenshots/` do repositório. Você pode alterar ou adicionar conforme necessário.*
 
