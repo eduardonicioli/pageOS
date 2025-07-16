@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log('Dados recebidos:', result);
 
             if (response.ok && result.success) {
-                alert(`Chamado aberto com sucesso! ID: ${result.chamadoId}`);
+                alert(`Chamado aberto com sucesso!\nPor favor, anote o ID: ${result.chamadoId}`);
                 form.reset();
                 outroErroContainer.classList.add('hidden');
                 outroErroInput.removeAttribute('required');

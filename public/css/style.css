@@ -211,7 +211,7 @@ textarea {
 /* Estilo para o botão Voltar */
 .button-back {
     background-color: #6c757d; /* Cinza para o botão Voltar */
-    max-width: 260px; /* Limita a largura dos botões */
+    max-width: 250px; /* Limita a largura dos botões */
 }
 
 .button-back:hover {
