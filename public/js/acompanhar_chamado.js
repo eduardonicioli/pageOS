@@ -1,5 +1,3 @@
-// public_html/js/acompanhar_chamado.js
-
 document.addEventListener('DOMContentLoaded', function() {
     const chamadoIdInput = document.getElementById('chamadoIdInput');
     const buscarChamadoBtn = document.getElementById('buscarChamadoBtn');
@@ -19,38 +17,45 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Esconde os elementos de resultado e erro no início
     function hideResults() {
-        resultadoChamadoDiv.classList.add('hidden');
-        mensagemErroChamadoDiv.classList.add('hidden');
-        mensagemErroChamadoDiv.textContent = ''; // Limpa a mensagem de erro
+        resultadoChamadoDiv.classList.add('d-none');
+        mensagemErroChamadoDiv.classList.add('d-none');
+        mensagemErroChamadoDiv.innerHTML = ''; // Limpa a mensagem de erro
     }
 
-    hideResults(); // Garante que estejam ocultos ao carregar a página
+    hideResults(); // Inicialmente oculta
+
+    // Permite ENTER para buscar
+    chamadoIdInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            buscarChamadoBtn.click();
+        }
+    });
 
     buscarChamadoBtn.addEventListener('click', async function() {
-        hideResults(); // Esconde resultados anteriores antes de uma nova busca
+        hideResults(); // Limpa tela
+
         const chamadoId = chamadoIdInput.value.trim();
 
         if (!chamadoId) {
-            mensagemErroChamadoDiv.classList.remove('hidden');
-            mensagemErroChamadoDiv.textContent = 'Por favor, digite um ID de chamado para buscar.';
+            mensagemErroChamadoDiv.classList.remove('d-none');
+            mensagemErroChamadoDiv.innerHTML = `
+                <div class="alert alert-warning text-center" role="alert">
+                    Por favor, digite um ID de chamado para buscar.
+                </div>`;
             return;
         }
 
         try {
-            // A URL aponta para o novo endpoint PHP para consultar chamados
             const apiUrl = `api/consultar_chamado.php?id=${encodeURIComponent(chamadoId)}`;
-            
             const response = await fetch(apiUrl, {
-                method: 'GET', // Requisição GET para buscar dados
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
             });
 
             const result = await response.json();
 
             if (response.ok && result.success) {
-                // Preenche os elementos com os dados do chamado
                 chamadoIdDisplay.textContent = result.chamado.uuid;
                 chamadoStatus.textContent = result.chamado.status;
                 chamadoRequerente.textContent = result.chamado.requerente;
@@ -58,19 +63,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 chamadoDispositivo.textContent = result.chamado.dispositivo;
                 chamadoErro.textContent = result.chamado.erro_apresentado;
                 chamadoUrgencia.textContent = result.chamado.urgencia;
-                chamadoComentario.textContent = result.chamado.comentario || 'N/A'; // Exibe N/A se não houver comentário
-                chamadoDataAbertura.textContent = new Date(result.chamado.data_abertura).toLocaleString('pt-BR'); // Formata a data
+                chamadoComentario.textContent = result.chamado.comentario || 'N/A';
+                chamadoDataAbertura.textContent = new Date(result.chamado.data_abertura).toLocaleString('pt-BR');
 
-                resultadoChamadoDiv.classList.remove('hidden'); // Mostra a seção de resultados
+                resultadoChamadoDiv.classList.remove('d-none');
             } else {
-                mensagemErroChamadoDiv.classList.remove('hidden');
-                mensagemErroChamadoDiv.textContent = result.message || 'Chamado não encontrado ou erro ao buscar.';
+                mensagemErroChamadoDiv.classList.remove('d-none');
+                mensagemErroChamadoDiv.innerHTML = `
+                    <div class="alert alert-danger text-center" role="alert">
+                        ${result.message || 'Chamado não encontrado ou erro ao buscar.'}
+                    </div>`;
             }
 
         } catch (error) {
-            console.error('Erro na requisição ou ao processar resposta:', error);
-            mensagemErroChamadoDiv.classList.remove('hidden');
-            mensagemErroChamadoDiv.textContent = 'Ocorreu um erro ao tentar buscar o chamado. Tente novamente mais tarde.';
+            console.error('Erro na requisição:', error);
+            mensagemErroChamadoDiv.classList.remove('d-none');
+            mensagemErroChamadoDiv.innerHTML = `
+                <div class="alert alert-danger text-center" role="alert">
+                    Ocorreu um erro ao tentar buscar o chamado. Tente novamente mais tarde.
+                </div>`;
         }
     });
 });
