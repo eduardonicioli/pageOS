@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plataforma de Suporte de TI</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plataforma de Suporte de TI</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css"> <!-- Aqui você pode manter customizações -->
 </head>
-<body>
-    <button id="theme-toggle" class="theme-toggle-button">🌙</button> 
+<body class="bg-light text-center d-flex flex-column justify-content-center align-items-center min-vh-100">
 
-    <div class="container">
-        <h1>Plataforma de Suporte de TI</h1>
-        <div class="button-group">
-            <a href="abrir_chamado.html" class="button button-home">Abrir Chamado</a>
-            <a href="acompanhar_chamado.html" class="button button-home">Acompanhar Chamado</a>
-        </div>
+  <!-- Botão de Tema -->
+  <button id="theme-toggle" class="btn btn-secondary position-fixed top-0 end-0 m-3 rounded-circle">
+    🌙
+  </button>
+
+  <div class="container p-4 bg-white rounded shadow" style="max-width: 500px;">
+    <h1 class="mb-4">Plataforma de Suporte de TI</h1>
+    <div class="d-grid gap-3">
+      <a href="abrir_chamado.html" class="btn btn-success btn-lg">Abrir Chamado</a>
+      <a href="acompanhar_chamado.html" class="btn btn-primary btn-lg">Acompanhar Chamado</a>
     </div>
+  </div>
 
-    <script src="js/theme.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/theme.js"></script>
 </body>
 </html>
