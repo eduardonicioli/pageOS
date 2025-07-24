@@ -38,18 +38,18 @@ Abaixo, algumas telas do sistema em funcionamento:
 
 Página inicial:
 <p align="center">
-  <img src="./imagens/screen1.png" alt="Formulário" width="300"/>
-  <img src="./imagens/screen2.png" alt="Lista de Chamados" width="300"/>
+  <img src="./imagens/1.png" alt="Formulário" width="300"/>
+  <img src="./imagens/2.png" alt="Lista de Chamados" width="300"/>
 </p>
 Página abertura de chamado:
 <p align="center">
-  <img src="./imagens/screen3.png" alt="Formulário" width="300"/>
-  <img src="./imagens/screen9.png" alt="Lista de Chamados" width="300"/>
+  <img src="./imagens/3.png" alt="Formulário" width="300"/>
+  <img src="./imagens/4.png" alt="Lista de Chamados" width="300"/>
 </p>
 Página acompanhar de chamado:
 <p align="center">
-  <img src="./imagens/screen5.png" alt="Formulário" width="300"/>
-  <img src="./imagens/screen7.png" alt="Lista de Chamados" width="300"/>
+  <img src="./imagens/5.png" alt="Formulário" width="300"/>
+  <img src="./imagens/6.png" alt="Lista de Chamados" width="300"/>
 </p>
 
 ---
