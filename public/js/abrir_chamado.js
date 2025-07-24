@@ -81,6 +81,11 @@ document.addEventListener('DOMContentLoaded', () => {
             <p>Anote o ID do chamado:</p>
             <h4 class="fw-bold text-primary" id="chamadoIdTexto">${result.chamadoId}</h4>
             <button type="button" class="btn btn-outline-primary btn-sm mt-2" id="btnCopiarOS">Copiar</button>
+            <div class="mt-3">
+              <a href="https://forms.gle/xGKHHnJSYULA31GS7" target="_blank" class="btn btn-success btn-sm">
+                📋 Enviar Feedback sobre o Atendimento
+              </a>
+            </div>
           </div>
         `;
         feedbackModal.show();
