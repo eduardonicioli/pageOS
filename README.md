@@ -4,7 +4,7 @@ Este é um projeto pessoal de **abertura de chamados técnicos**, desenvolvido c
 A ideia é oferecer uma solução simples e funcional para registrar solicitações de suporte de forma organizada e prática. 📋💡
 
 > 💡 O sistema está **disponível para testes gratuitamente** em:  
-👉 [http://bradoke.serv00.net](http://bradoke.serv00.net/pageos) — hospedado no servidor [serv00.net](http://serv00.net)
+👉 [http://bradoke.serv00.net/pageos](http://bradoke.serv00.net/pageos) — hospedado no servidor [serv00.net](http://serv00.net)
 
 ---
 
