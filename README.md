@@ -51,7 +51,3 @@ Página acompanhar de chamado:
   <img src="./imagens/5.jpeg" alt="Formulário" width="300"/>
   <img src="./imagens/6.jpeg" alt="Lista de Chamados" width="300"/>
 </p>
-
-1. 🔽 Clone o repositório:
-   ```bash
-   git clone https://github.com/eduardonicioli/pageOS.git
