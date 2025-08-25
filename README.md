@@ -52,10 +52,6 @@ Página acompanhar de chamado:
   <img src="./imagens/6.jpeg" alt="Lista de Chamados" width="300"/>
 </p>
 
----
-
-## 🚀 Como Executar Localmente
-
 1. 🔽 Clone o repositório:
    ```bash
    git clone https://github.com/eduardonicioli/pageOS.git
