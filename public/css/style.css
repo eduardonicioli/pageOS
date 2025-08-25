@@ -103,6 +103,13 @@ body.dark-mode .modal-footer {
     text-align: center;
 }
 
+.chamado-details h3 {
+    color: hsl(214, 100%, 50%);
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
 .chamado-details p {
     margin-bottom: 8px;
     line-height: 1.5;
@@ -145,3 +152,4 @@ body.dark-mode .error-message {
         font-size: 1.5em;
     }
 }
+
