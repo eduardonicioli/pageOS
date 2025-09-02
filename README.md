@@ -53,5 +53,5 @@ Página acompanhar de chamado:
 </p>
 Página acompanhar de chamado:
 <p align="center">
-  <img src="./imagens/7.jpeg" alt="Formulário" width="300"/>
+  <img src="./imagens/7.jpeg" alt="Formulário" width="700"/>
 </p>
