@@ -51,7 +51,7 @@ Página acompanhar de chamado:
   <img src="./imagens/5.jpeg" alt="Formulário" width="300"/>
   <img src="./imagens/6.jpeg" alt="Lista de Chamados" width="300"/>
 </p>
-Página acompanhar de chamado:
+Página Administrador:
 <p align="center">
   <img src="./imagens/7.jpeg" alt="Formulário" width="700"/>
 </p>
