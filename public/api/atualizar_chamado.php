@@ -7,7 +7,7 @@ $response = ['success' => false, 'message' => ''];
 
 try {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        http_response_code(405); // Método não permitido
+        http_response_code(405);
         throw new Exception('Método inválido. Use POST.');
     }
 
@@ -22,7 +22,6 @@ try {
     $status = trim($input['status']);
     $descricaoServico = isset($input['descricao_servico']) ? trim($input['descricao_servico']) : null;
 
-    // Conexão com PDO
     $pdo = new PDO(
         "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8",
         DB_USER,
@@ -30,11 +29,21 @@ try {
         [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
     );
 
-    // Prepara SQL com descrição, se enviada
+    // Monta SQL
     $sql = "UPDATE chamados SET status = :status";
 
     if ($descricaoServico !== null) {
         $sql .= ", descricao_servico = :descricao_servico";
+    }
+
+    // Regra de data_encerramento
+    date_default_timezone_set('America/Sao_Paulo');
+
+    if (strcasecmp($status, 'Encerrado') === 0) {
+        $dataAgora = date("Y-m-d H:i:s");
+        $sql .= ", data_encerramento = '$dataAgora'";
+    } else {
+        $sql .= ", data_encerramento = NULL";
     }
 
     $sql .= " WHERE uuid = :uuid";

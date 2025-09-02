@@ -43,7 +43,8 @@ try {
             status, 
             comentario, 
             descricao_servico,
-            data_abertura
+            data_abertura,
+            data_encerramento
         FROM chamados
         WHERE 1 = 1
     ";
@@ -77,6 +78,7 @@ try {
     }
 
     $sql .= " ORDER BY data_abertura DESC";
+    
 
     // Execução segura
     $stmt = $pdo->prepare($sql);

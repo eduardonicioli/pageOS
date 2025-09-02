@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const chamadoUrgencia = document.getElementById('chamadoUrgencia');
   const chamadoComentario = document.getElementById('chamadoComentario');
   const chamadoDataAbertura = document.getElementById('chamadoDataAbertura');
+  const chamadoDataEncerramento = document.getElementById('chamadoDataEncerramento'); // 👈 novo
 
   function hideResults() {
     resultadoChamadoDiv.classList.add('d-none');
@@ -64,6 +65,13 @@ document.addEventListener('DOMContentLoaded', function () {
         chamadoUrgencia.textContent = result.chamado.urgencia;
         chamadoComentario.textContent = result.chamado.comentario || 'N/A';
         chamadoDataAbertura.textContent = new Date(result.chamado.data_abertura).toLocaleString('pt-BR');
+
+        // 👇 tratamento da data de encerramento
+        if (result.chamado.data_encerramento) {
+          chamadoDataEncerramento.textContent = new Date(result.chamado.data_encerramento).toLocaleString('pt-BR');
+        } else {
+          chamadoDataEncerramento.textContent = 'Ainda não encerrado';
+        }
 
         resultadoChamadoDiv.classList.remove('d-none');
       } else {

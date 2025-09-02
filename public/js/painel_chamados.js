@@ -86,7 +86,8 @@ async function carregarChamadosComFiltro() {
           <td>${chamado.erro || '-'}</td>
           <td>${chamado.urgencia}</td>
           <td>${chamado.status}</td>
-          <td>${new Date(chamado.data_abertura).toLocaleString('pt-BR')}</td>
+          <td>${formatarData(chamado.data_abertura)}</td>
+          <td>${formatarData(chamado.data_encerramento)}</td>
           <td>
             <button class="btn btn-sm btn-outline-primary btnDetalhes" 
               data-uuid="${chamado.uuid}" 
@@ -101,6 +102,7 @@ async function carregarChamadosComFiltro() {
             </button>
           </td>
         `;
+
         tabelaBody.appendChild(linha);
       });
 
@@ -116,6 +118,13 @@ async function carregarChamadosComFiltro() {
     console.error('Erro ao carregar chamados:', erro);
     mostrarAlerta('Erro ao conectar com o servidor ou processar os dados.', alerta);
   }
+}
+
+function formatarData(data) {
+    if (!data || data === "0000-00-00 00:00:00" || data === null) {
+        return "Ainda não encerrado";
+    }
+    return new Date(data).toLocaleString("pt-BR");
 }
 
 function mostrarAlerta(mensagem, elemento) {

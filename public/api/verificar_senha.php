@@ -2,7 +2,7 @@
 session_start();
 header("Content-Type: application/json");
 
-$senhaCorreta = "@Dmin#295";
+$senhaCorreta = "XXXXXXXX"; // Substitua pela senha correta desejada
 $input = json_decode(file_get_contents("php://input"), true);
 
 if (isset($input["inputSenha"]) && $input["inputSenha"] === $senhaCorreta) {

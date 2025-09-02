@@ -1,6 +1,4 @@
 <?php
-// public_html/api/consultar_chamado.php
-
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
@@ -11,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-require_once __DIR__ . '/../includes/db_config.php'; // Conexão com o banco de dados
+require_once __DIR__ . '/../includes/db_config.php';
 
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
@@ -24,11 +22,10 @@ if ($conn->connect_error) {
     exit();
 }
 
-// Pega o ID do chamado da URL (GET parameter)
 $chamadoId = isset($_GET['id']) ? $conn->real_escape_string($_GET['id']) : '';
 
 if (empty($chamadoId)) {
-    http_response_code(400); // Bad Request
+    http_response_code(400);
     echo json_encode([
         'success' => false,
         'message' => 'ID do chamado não fornecido.'
@@ -37,21 +34,33 @@ if (empty($chamadoId)) {
     exit();
 }
 
-// Consulta o banco de dados pelo UUID
-$stmt = $conn->prepare("SELECT uuid, requerente, urgencia, departamento, dispositivo, erro_apresentado, comentario, status, data_abertura FROM chamados WHERE uuid = ?");
+$stmt = $conn->prepare("
+    SELECT uuid, requerente, urgencia, departamento, dispositivo, erro_apresentado, comentario, status, data_abertura, data_encerramento
+    FROM chamados
+    WHERE uuid = ?
+");
 $stmt->bind_param("s", $chamadoId);
 $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
     $chamado = $result->fetch_assoc();
-    http_response_code(200); // OK
+
+    // 🔹 Converter datas para formato ISO 8601 (compatível com o JavaScript)
+    if (!empty($chamado['data_abertura'])) {
+        $chamado['data_abertura'] = date('c', strtotime($chamado['data_abertura']));
+    }
+    if (!empty($chamado['data_encerramento'])) {
+        $chamado['data_encerramento'] = date('c', strtotime($chamado['data_encerramento']));
+    }
+
+    http_response_code(200);
     echo json_encode([
         'success' => true,
         'chamado' => $chamado
     ]);
 } else {
-    http_response_code(404); // Not Found
+    http_response_code(404);
     echo json_encode([
         'success' => false,
         'message' => 'Chamado não encontrado.'
@@ -60,5 +69,3 @@ if ($result->num_rows > 0) {
 
 $stmt->close();
 $conn->close();
-
-?>
