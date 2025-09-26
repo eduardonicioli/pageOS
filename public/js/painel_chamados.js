@@ -97,7 +97,9 @@ async function carregarChamadosComFiltro() {
               data-erro="${chamado.erro || '-'}"
               data-urgencia="${chamado.urgencia}"
               data-status="${chamado.status}"
-              data-descricao="${chamado.descricao_servico || ''}">
+              data-descricao="${chamado.descricao_servico || ''}"
+              data-data_abertura="${chamado.data_abertura}"
+              data-data_encerramento="${chamado.data_encerramento || ''}">
               Detalhes
             </button>
           </td>
@@ -141,6 +143,8 @@ function abrirModalDetalhes(data) {
   document.getElementById('modalDispositivo').textContent = data.dispositivo;
   document.getElementById('modalErro').textContent = data.erro;
   document.getElementById('modalUrgencia').textContent = data.urgencia;
+  document.getElementById('modalDataAbertura').textContent = formatarData(data.data_abertura);
+  document.getElementById('modalDataEncerramento').textContent = formatarData(data.data_encerramento);
   document.getElementById('statusSelect').value = data.status;
   document.getElementById('descricao_servico').value = data.descricao || '';
   document.getElementById('salvarStatusBtn').dataset.uuid = data.uuid;
