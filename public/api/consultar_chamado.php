@@ -1,4 +1,6 @@
 <?php
+// public_html/api/consultar_chamado.php (REFATORADO)
+
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
@@ -9,7 +11,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-require_once __DIR__ . '/../includes/db_config.php';
+// O caminho para o db_config.php foi mantido conforme o seu código original
+require_once __DIR__ . '/../includes/db_config.php'; 
+// ✅ NOVO: Inclui a função de cálculo da mesma pasta 'api/'
+require_once __DIR__ . '/../api/calculo_tempo.php'; 
+
+// -----------------------------------------------------------
 
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
@@ -46,7 +53,13 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     $chamado = $result->fetch_assoc();
 
-    // 🔹 Converter datas para formato ISO 8601 (compatível com o JavaScript)
+    // 1. CALCULAR O TEMPO TOTAL, USANDO A FUNÇÃO AGORA INCLUÍDA
+    $chamado['tempo_total'] = calcularTempoChamado(
+        $chamado['data_abertura'], 
+        $chamado['data_encerramento'] // Passa NULL se estiver em aberto
+    );
+    
+    // 2. Converter datas para formato ISO 8601 (compatível com o JavaScript)
     if (!empty($chamado['data_abertura'])) {
         $chamado['data_abertura'] = date('c', strtotime($chamado['data_abertura']));
     }

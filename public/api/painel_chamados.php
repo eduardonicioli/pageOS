@@ -1,16 +1,26 @@
 <?php
+// public_html/api/painel_chamados.php
+
 session_start();
+// 🚨 Nota: Este endpoint está sendo acessado via AJAX/fetch (GET/POST),
+// a verificação de autenticação deve ser tratada com cautela, mas a lógica básica de redirecionamento está correta.
 if (!isset($_SESSION["autenticado"])) {
-  header("Location: painel_chamados.php");
+  // Retorna um erro HTTP 401 (Não Autorizado) para o JavaScript em vez de um redirecionamento
+  http_response_code(401);
+  echo json_encode(['success' => false, 'message' => 'Sessão expirada ou não autenticada.']);
   exit();
 }
+
 header('Content-Type: application/json');
-require_once __DIR__ . '/../includes/db_config.php';
+
+// Ajustado o caminho para assumir que painel_chamados.php está em public_html/api/
+require_once __DIR__ . '/../includes/db_config.php'; 
+require_once __DIR__ . '/../api/calculo_tempo.php'; // ✅ Inclui a função calcularTempoChamado, que deve estar na mesma pasta 'api/'
 
 $response = ['success' => false, 'chamados' => [], 'message' => ''];
 
 try {
-    // Conexão com PDO
+    // 1. Conexão com PDO
     $pdo = new PDO(
         "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
         DB_USER,
@@ -24,21 +34,21 @@ try {
     // Captura do corpo JSON com filtros (POST)
     $data = json_decode(file_get_contents('php://input'), true) ?: [];
 
-    // Sanitização dos filtros
-    $status     = isset($data['status'])     && $data['status']     !== '' ? trim($data['status'])     : null;
-    $urgencia   = isset($data['urgencia'])   && $data['urgencia']   !== '' ? trim($data['urgencia'])   : null;
-    $dataInicio = isset($data['dataInicio']) && $data['dataInicio'] !== '' ? trim($data['dataInicio']) : null;
-    $dataFim    = isset($data['dataFim'])    && $data['dataFim']    !== '' ? trim($data['dataFim'])    : null;
-    $busca      = isset($data['busca'])      && $data['busca']      !== '' ? trim($data['busca'])      : null;
+    // 2. Sanitização dos Filtros (Melhorada)
+    $status     = $data['status']     ?? null;
+    $urgencia   = $data['urgencia']   ?? null;
+    $dataInicio = $data['dataInicio'] ?? null;
+    $dataFim    = $data['dataFim']    ?? null;
+    $busca      = $data['busca']      ?? null;
 
-    // SQL base com JOINs se necessário no futuro
+    // 3. Montagem da Query SQL
     $sql = "
         SELECT 
             uuid, 
             requerente, 
             departamento, 
             dispositivo, 
-            erro_apresentado AS erro, 
+            erro_apresentado, 
             urgencia, 
             status, 
             comentario, 
@@ -52,27 +62,27 @@ try {
     $params = [];
 
     // Aplicação dinâmica de filtros
-    if ($status) {
+    if (!empty($status)) {
         $sql .= " AND status = :status";
         $params[':status'] = $status;
     }
 
-    if ($urgencia) {
+    if (!empty($urgencia)) {
         $sql .= " AND urgencia = :urgencia";
         $params[':urgencia'] = $urgencia;
     }
 
-    if ($dataInicio) {
+    if (!empty($dataInicio)) {
         $sql .= " AND data_abertura >= :dataInicio";
         $params[':dataInicio'] = $dataInicio . ' 00:00:00';
     }
 
-    if ($dataFim) {
+    if (!empty($dataFim)) {
         $sql .= " AND data_abertura <= :dataFim";
         $params[':dataFim'] = $dataFim . ' 23:59:59';
     }
 
-    if ($busca) {
+    if (!empty($busca)) {
         $sql .= " AND (uuid LIKE :busca OR requerente LIKE :busca OR departamento LIKE :busca)";
         $params[':busca'] = '%' . $busca . '%';
     }
@@ -80,18 +90,41 @@ try {
     $sql .= " ORDER BY data_abertura DESC";
     
 
-    // Execução segura
+    // 4. Execução e Busca de Resultados
     $stmt = $pdo->prepare($sql);
     $stmt->execute($params);
     $chamados = $stmt->fetchAll();
 
+    $chamados_processados = [];
+
+    // 5. Processamento dos Dados, Cálculo do Tempo e Formatação
+    foreach ($chamados as $chamado) {
+        
+        // 🟢 CALCULA O TEMPO TOTAL E ADICIONA AO ARRAY
+        $chamado['tempo_total'] = calcularTempoChamado(
+            $chamado['data_abertura'], 
+            $chamado['data_encerramento']
+        );
+        
+        // 🔹 CONVERTE DATAS PARA FORMATO ISO 8601 (Compatível com JavaScript)
+        if (!empty($chamado['data_abertura'])) {
+            $chamado['data_abertura'] = date('c', strtotime($chamado['data_abertura']));
+        }
+        if (!empty($chamado['data_encerramento'])) {
+            $chamado['data_encerramento'] = date('c', strtotime($chamado['data_encerramento']));
+        }
+
+        $chamados_processados[] = $chamado;
+    }
+
+
     $response['success'] = true;
-    $response['chamados'] = $chamados;
+    $response['chamados'] = $chamados_processados;
 
 } catch (PDOException $e) {
     http_response_code(500);
-    $response['message'] = 'Erro ao buscar chamados.';
+    $response['message'] = 'Erro ao buscar chamados no banco de dados.';
     error_log('[DB ERROR] ' . $e->getMessage());
 }
 
-echo json_encode($response, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+echo json_encode($response, JSON_UNESCAPED_UNICODE);

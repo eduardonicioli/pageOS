@@ -13,15 +13,20 @@ document.addEventListener('DOMContentLoaded', function () {
   const chamadoUrgencia = document.getElementById('chamadoUrgencia');
   const chamadoComentario = document.getElementById('chamadoComentario');
   const chamadoDataAbertura = document.getElementById('chamadoDataAbertura');
-  const chamadoDataEncerramento = document.getElementById('chamadoDataEncerramento'); // 👈 novo
+  const chamadoDataEncerramento = document.getElementById('chamadoDataEncerramento');
+  // 🔹 NOVO: Seleção do elemento para exibir o tempo total
+  const chamadoTempoTotal = document.getElementById('chamadoTempoTotal'); 
+  
 
   function hideResults() {
-    resultadoChamadoDiv.classList.add('d-none');
-    mensagemErroChamadoDiv.classList.add('d-none');
+    // Usando 'hidden' no lugar de 'd-none' para consistência com o CSS base do projeto
+    resultadoChamadoDiv.classList.add('hidden'); 
+    mensagemErroChamadoDiv.classList.add('hidden');
     mensagemErroChamadoDiv.innerHTML = '';
   }
 
-  hideResults();
+  // Se você usa Bootstrap e 'd-none', use d-none aqui. Caso contrário, mantenha 'hidden'.
+  hideResults(); 
 
   chamadoIdInput.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
@@ -36,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const chamadoId = chamadoIdInput.value.trim();
 
     if (!chamadoId) {
-      mensagemErroChamadoDiv.classList.remove('d-none');
+      mensagemErroChamadoDiv.classList.remove('hidden');
       mensagemErroChamadoDiv.innerHTML = `
         <div class="alert alert-warning text-center" role="alert">
           Por favor, digite um ID de chamado para buscar.
@@ -66,16 +71,20 @@ document.addEventListener('DOMContentLoaded', function () {
         chamadoComentario.textContent = result.chamado.comentario || 'N/A';
         chamadoDataAbertura.textContent = new Date(result.chamado.data_abertura).toLocaleString('pt-BR');
 
-        // 👇 tratamento da data de encerramento
+        // Tratamento da data de encerramento
         if (result.chamado.data_encerramento) {
           chamadoDataEncerramento.textContent = new Date(result.chamado.data_encerramento).toLocaleString('pt-BR');
         } else {
           chamadoDataEncerramento.textContent = 'Ainda não encerrado';
         }
 
-        resultadoChamadoDiv.classList.remove('d-none');
+        // 🟢 NOVO: Exibir o Tempo Total calculado pelo PHP
+        // O PHP retorna o campo 'tempo_total'
+        chamadoTempoTotal.textContent = result.chamado.tempo_total; 
+        
+        resultadoChamadoDiv.classList.remove('hidden');
       } else {
-        mensagemErroChamadoDiv.classList.remove('d-none');
+        mensagemErroChamadoDiv.classList.remove('hidden');
         mensagemErroChamadoDiv.innerHTML = `
           <div class="alert alert-danger text-center" role="alert">
             ${result.message || 'Chamado não encontrado ou erro ao buscar.'}
@@ -84,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     } catch (error) {
       console.error('Erro na requisição:', error);
-      mensagemErroChamadoDiv.classList.remove('d-none');
+      mensagemErroChamadoDiv.classList.remove('hidden');
       mensagemErroChamadoDiv.innerHTML = `
         <div class="alert alert-danger text-center" role="alert">
           Ocorreu um erro ao tentar buscar o chamado. Tente novamente mais tarde.

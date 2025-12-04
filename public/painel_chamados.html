@@ -1,18 +1,3 @@
-<script>
-  fetch('api/verificar_sessao.php')
-    .then(res => res.json())
-    .then(data => {
-      if (!data.autenticado) {
-        alert("Acesso não autorizado. Faça login.");
-        window.location.href = "index.html";
-      }
-    })
-    .catch(() => {
-      alert("Erro ao verificar sessão.");
-      window.location.href = "index.html";
-    });
-</script>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -23,127 +8,126 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="bg-light">
-  <!-- Filtros -->
-  <div class="card mb-4">
-    <div class="card-body">
-      <form id="formFiltros" class="row g-3">
-        <div class="col-md-4">
-          <label for="filtroBusca" class="form-label">Busca (ID, Requerente ou Departamento)</label>
-          <input type="text" class="form-control" id="filtroBusca" placeholder="Ex: OS-2025-1234 / Requerente / Departamento">
-        </div>
+  
+  <button id="theme-toggle" class="btn btn-secondary position-fixed top-0 end-0 m-3 rounded-circle">
+    🌙
+  </button>
 
-        <div class="col-md-2">
-          <label for="filtroStatus" class="form-label">Status</label>
-          <select class="form-select" id="filtroStatus">
-            <option value="">Todos</option>
-            <option value="Aberto">Aberto</option>
-            <option value="Em andamento">Em andamento</option>
-            <option value="Encerrado">Encerrado</option>
-          </select>
-        </div>
-
-        <div class="col-md-2">
-          <label for="filtroUrgencia" class="form-label">Urgência</label>
-          <select class="form-select" id="filtroUrgencia">
-            <option value="">Todas</option>
-            <option value="1">1 - Crítica</option>
-            <option value="2">2 - Alta</option>
-            <option value="3">3 - Média</option>
-            <option value="4">4 - Baixa</option>
-            <option value="5">5 - Planejamento</option>
-          </select>
-        </div>
-
-        <div class="col-md-2">
-          <label for="filtroDataInicio" class="form-label">Data Início</label>
-          <input type="date" class="form-control" id="filtroDataInicio">
-        </div>
-
-        <div class="col-md-2">
-          <label for="filtroDataFim" class="form-label">Data Fim</label>
-          <input type="date" class="form-control" id="filtroDataFim">
-        </div>
-
-        <div class="col-12 text-end">
-          <button type="button" id="btnAplicarFiltros" class="btn btn-primary me-2">Aplicar Filtros</button>
-          <button type="button" id="btnLimparFiltros" class="btn btn-secondary">Limpar</button>
-          <a href="api/logout.php" class="btn btn-danger">Sair do Painel</a>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Alerta de carregamento -->
-  <div id="alertaCarregamento" class="alert alert-info text-center d-none" role="alert">
-    Carregando chamados, aguarde...
-  </div>
-
-  <!-- Tabela -->
-  <div class="table-responsive">
-    <table class="table table-bordered table-hover align-middle">
-      <thead class="table-dark text-center">
-        <tr>
-          <th>ID</th>
-          <th>Requerente</th>
-          <th>Departamento</th>
-          <th>Dispositivo</th>
-          <th>Erro</th>
-          <th>Urgência</th>
-          <th>Status</th>
-          <th>Abertura</th>
-          <th>Encerramento</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody id="tabelaChamados">
-        <!-- Conteúdo via JS -->
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Modal de Detalhes -->
-  <div class="modal fade" id="modalDetalhes" tabindex="-1" aria-labelledby="modalDetalhesLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Detalhes do Chamado</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-        </div>
-        <div class="modal-body">
-          <p><strong>ID:</strong> <span id="modalUuid"></span></p>
-          <p><strong>Requerente:</strong> <span id="modalRequerente"></span></p>
-          <p><strong>Departamento:</strong> <span id="modalDepartamento"></span></p>
-          <p><strong>Dispositivo:</strong> <span id="modalDispositivo"></span></p>
-          <p><strong>Erro Apresentado:</strong> <span id="modalErro"></span></p>
-          <p><strong>Urgência:</strong> <span id="modalUrgencia"></span></p>
-          <p><strong>Data Abertura:</strong> <span id="modalDataAbertura"></span></p>
-          <p><strong>Data Encerramento:</strong> <span id="modalDataEncerramento"></span></p>
-
-          <div class="mb-3">
-            <label for="statusSelect" class="form-label">Alterar Status</label>
-            <select class="form-select" id="statusSelect">
+  <div class="container-fluid p-4"> 
+    
+    <div class="card mb-4">
+      <div class="card-body">
+        <form id="formFiltros" class="row g-3">
+          <div class="col-md-4">
+            <label for="filtroBusca" class="form-label">Busca (ID, Requerente ou Departamento)</label>
+            <input type="text" class="form-control" id="filtroBusca" placeholder="Ex: OS-2025-1234 / Requerente / Departamento">
+          </div>
+          <div class="col-md-2">
+            <label for="filtroStatus" class="form-label">Status</label>
+            <select class="form-select" id="filtroStatus">
+              <option value="">Todos</option>
               <option value="Aberto">Aberto</option>
               <option value="Em andamento">Em andamento</option>
               <option value="Encerrado">Encerrado</option>
             </select>
           </div>
-
-          <div class="mb-3">
-            <label for="descricao_servico" class="form-label">Descrição do Serviço Prestado</label>
-            <textarea id="descricao_servico" class="form-control" rows="4" placeholder="Descreva o serviço realizado..."></textarea>
+          <div class="col-md-2">
+            <label for="filtroUrgencia" class="form-label">Urgência</label>
+            <select class="form-select" id="filtroUrgencia">
+              <option value="">Todas</option>
+              <option value="1">1 - Crítica</option>
+              <option value="2">2 - Alta</option>
+              <option value="3">3 - Média</option>
+              <option value="4">4 - Baixa</option>
+              <option value="5">5 - Planejamento</option>
+            </select>
           </div>
-        </div>
+          <div class="col-md-2">
+            <label for="filtroDataInicio" class="form-label">Data Início</label>
+            <input type="date" class="form-control" id="filtroDataInicio">
+          </div>
+          <div class="col-md-2">
+            <label for="filtroDataFim" class="form-label">Data Fim</label>
+            <input type="date" class="form-control" id="filtroDataFim">
+          </div>
+          <div class="col-12 text-end">
+            <button type="button" id="btnAplicarFiltros" class="btn btn-primary me-2">Aplicar Filtros</button>
+            <button type="button" id="btnLimparFiltros" class="btn btn-secondary">Limpar</button>
+            <a href="api/logout.php" class="btn btn-danger">Sair do Painel</a>
+          </div>
+        </form>
+      </div>
+    </div>
 
-        <div class="modal-footer">
-          <button id="salvarStatusBtn" class="btn btn-primary">Salvar Alterações</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+    <div id="alertaCarregamento" class="alert alert-info text-center d-none" role="alert">
+      Carregando chamados, aguarde...
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover align-middle">
+        <thead class="table-dark text-center">
+          <tr>
+            <th>ID</th>
+            <th>Requerente</th>
+            <th>Departamento</th>
+            <th>Dispositivo</th>
+            <th>Erro</th>
+            <th>Urgência</th>
+            <th>Status</th>
+            <th>Abertura</th>
+            <th>Encerramento</th>
+            <th>Tempo</th> 
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaChamados">
+          </tbody>
+      </table>
+    </div>
+
+    <div class="modal fade" id="modalDetalhes" tabindex="-1" aria-labelledby="modalDetalhesLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Detalhes do Chamado</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+          </div>
+          <div class="modal-body">
+            <p><strong>ID:</strong> <span id="modalUuid"></span></p>
+            <p><strong>Requerente:</strong> <span id="modalRequerente"></span></p>
+            <p><strong>Departamento:</strong> <span id="modalDepartamento"></span></p>
+            <p><strong>Dispositivo:</strong> <span id="modalDispositivo"></span></p>
+            <p><strong>Erro Apresentado:</strong> <span id="modalErro"></span></p>
+            <p><strong>Urgência:</strong> <span id="modalUrgencia"></span></p>
+            <p><strong>Data Abertura:</strong> <span id="modalDataAbertura"></span></p>
+            <p><strong>Data Encerramento:</strong> <span id="modalDataEncerramento"></span></p>
+            
+            <p><strong>Tempo Decorrido:</strong> <span id="modalTempoDecorrido"></span></p> 
+
+            <div class="mb-3">
+              <label for="statusSelect" class="form-label">Alterar Status</label>
+              <select class="form-select" id="statusSelect">
+                <option value="Aberto">Aberto</option>
+                <option value="Em andamento">Em andamento</option>
+                <option value="Encerrado">Encerrado</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="descricao_servico" class="form-label">Descrição do Serviço Prestado</label>
+              <textarea id="descricao_servico" class="form-control" rows="4" placeholder="Descreva o serviço realizado..."></textarea>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button id="salvarStatusBtn" class="btn btn-primary">Salvar Alterações</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </div> <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/theme.js"></script>
   <script src="js/painel_chamados.js"></script>
 </body>
